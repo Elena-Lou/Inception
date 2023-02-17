@@ -8,11 +8,30 @@ services:
   mariadb:
     image: maria_db:my_mariadb
     build: ./requirements/mariadb
+    env_file: .env
+    environment:
+      - MYSQL_DATABASE=wordpress
+    volumes:
+      -dbdata:/var/lib/mysql
+    networks:
+      - app-network
     restart: always
 
   wordpress:
     image: wordpress:my_wordpress
     build: ./requirements/wordpress
+    env_file: .env
+    environment:
+      - WORDPRESS_DB_HOST:db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
     depends_on:
       - mariadb
+    volumes:
+      - wordpress:/var/www/html
     restart: always
+
+    networks:
+      app-network:
+        driver:bridge

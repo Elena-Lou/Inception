@@ -1,6 +1,9 @@
 server {
-	listen 443 default_server;
-	listen [::]:443 default_server;
+	listen 		443 ssl;
+	server_name	elouisia.42.fr www.elouisia.42.fr;
+	ssl_certificate	elouisia.42.fr.crt;
+	ssl_certificate_key elouisia.42.fr.key;
+	ssl_protocols	TLSv1.1 TLSv1.2;
 
 	root /usr/share/nginx/html;
 	index index.html index.htm;
