@@ -1,6 +1,6 @@
 FROM debian:buster
 
-RUN apt update && apt install execline -y \ 
+RUN apt update && apt upgrade -y && apt install execline -y \ 
 	&& apt install mariadb-server -y \
 	&& mkdir -p /run/mysqld \
 	&& chown -R mysql:mysql /run/mysqld \
@@ -15,7 +15,7 @@ COPY conf/docker-entrypoint.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-#ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 EXPOSE 3306
 
