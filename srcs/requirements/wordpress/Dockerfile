@@ -2,6 +2,7 @@ FROM debian:buster
 
 RUN apt-get update && apt-get -y install \
 	curl \
+	bash \
 	php-fpm \
 	php-mysql \
 	php-cgi \
@@ -32,4 +33,4 @@ WORKDIR /var/www/
 
 EXPOSE 9000
 
-CMD ["usr/sbin/php-fpm7.3", "-F"]
+CMD ["/usr/sbin/php-fpm7.3", "-F"]
