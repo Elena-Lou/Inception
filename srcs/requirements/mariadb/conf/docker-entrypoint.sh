@@ -1,10 +1,5 @@
 #!/bin/bash
 
-ARG MYSQL_ROOT_PASSWORD=my_root_password
-ARG MYSQL_USER=wordpress_db_user
-ARG MYSQL_PASSWORD=wordpress_db_user
-ARG ROOT_PASSWORD=inceptionMDP
-
 mysql_install_db
 
 service mysql start
