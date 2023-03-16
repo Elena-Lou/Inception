@@ -7,5 +7,9 @@ RUN apt update && apt install nginx curl -y  \
 
 COPY conf /etc/nginx/sites-available/default
 
+RUN chmod 755 /var/www/ \
+	&& chown -R www-data:www-data /var/www/
+
+
 CMD ["usr/sbin/nginx", "-g", "daemon off;"] 
 
