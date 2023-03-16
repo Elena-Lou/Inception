@@ -48,8 +48,8 @@ services:
       - inception
     volumes:
       - wordpress:/var/www/wordpress 
-#    depends_on:
-#      - mariadb
+    depends_on:
+      - mariadb
     restart: on-failure 
     expose:
       - "9000"
@@ -69,6 +69,13 @@ volumes:
       type: 'none'
       o: 'bind'
       device: home/elouisia/data/wordpress
+
+  nginx:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: home/elouisia/data/wordpress	
 
 networks:
   inception:
