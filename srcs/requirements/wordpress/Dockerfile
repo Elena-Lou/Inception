@@ -25,6 +25,8 @@ COPY ./conf/wordpress-setup.sh /usr/local/bin/
 
 COPY ./conf/wp-config.php /var/www/
 
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
+
 RUN chmod +x /usr/local/bin/wordpress-setup.sh
 
 ENTRYPOINT ["/usr/local/bin/wordpress-setup.sh"]

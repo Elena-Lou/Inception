@@ -13,5 +13,6 @@ do
 done
 
 mv wp-config.php wordpress/
+rm wordpress/wp-config-sample.php
 
 exec "$@"
