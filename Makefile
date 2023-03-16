@@ -15,9 +15,9 @@ debug:
 	@docker compose -f $(DOCKER_COMPOSE) --verbose up 
 
 clean:
-	@cd srcs && docker compose -f down
+	@cd srcs && docker compose down
 	@docker system prune --volumes -a -f
 	@sudo rm -rf /home/elouisia/data/*
-	@docker volume prune
+	@docker volume rm srcs_mariadb srcs_wordpress
 
 .PHONY: run debug clean
