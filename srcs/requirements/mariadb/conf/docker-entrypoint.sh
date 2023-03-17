@@ -2,44 +2,29 @@
 
 mysql_install_db
 
-service mysql start
+config_file=`mktemp`
+#if [! -f "$config_file"]; then
+#	echo " /!\ config_file not found /!\ "
+#	return 1
+#fi
 
-#mysql -e "SELECT user,authentication_string,plugin,host FROM mysql.user;"
+echo config_file created
 
-mysql -e "DELETE FROM mysql.user WHERE user='' ;"
 
-#mysql -e "DROP USER ''@'$(hostname)';"
+cat << _EOF_ > $config_file
 
-mysql -e "DROP DATABASE test;"
+DROP DATABASE test;
 
-echo "\n --- DataBase dropped --- \n"
+CREATE DATABASE IF NOT EXISTS wordpress;
 
-mysql -e "SELECT user,authentication_string,plugin,host FROM mysql.user;"
+SHOW DATABASES;
 
-mysql -e "CREATE DATABASE IF NOT EXISTS wordpress;"
+FLUSH PRIVILEGES;
 
-mysql -e "SHOW DATABASES;"
+_EOF_
 
-echo "\n --- creation user Bouh --- \n"
 
-mysql -e "CREATE USER IF NOT EXISTS 'bouh'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
+cat $config_file
 
-mysql -e "SELECT user FROM mysql.user;"
-
-mysql -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'bouh'@'localhost' IDENTIFIED BY '$MYSQL_PASSWORD';"
-
-echo "\n --- user bouh receives all privileges on wordpress --- \n"
-
-mysql -e "SELECT user,authentication_string,plugin,host FROM mysql.user;"
-
-#mysql -e "UPDATE mysql.user SET plugin = 'mysql_native_password' WHERE user = 'root';"
-
-#mysql -e "UPDATE mysql.user SET password = PASSWORD('IMANEWPWD') WHERE user = 'root';"
-
-echo "\n --- password set for root user --- \n"
-
-mysql -e "FLUSH PRIVILEGES;"
-
-service mysql stop
-
-exec "$@"
+mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $config_file
+exec mysqld --user --console --skip-name-resolve --skip-networking=0 $@

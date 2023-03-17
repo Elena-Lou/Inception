@@ -33,8 +33,13 @@ services:
     volumes:
     - mariadb:/var/lib/mysql
     restart: on-failure
+    healthcheck:
+      test: [ 'CMD', 'mysqladmin', 'ping', '-u', 'root', '-p${MYSQL_ROOT_PASSWORD?REQUIRED}']
+      interval: 1m
+      timeout: 10s
+      retries: 5
     expose:
-    - "3306" 
+    - "3306"
 
   wordpress:
     container_name: wordpress
