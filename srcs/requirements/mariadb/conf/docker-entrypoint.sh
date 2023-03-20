@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mysql_install_db
+#mysql_install_db
 
 config_file=`mktemp`
 #if [! -f "$config_file"]; then
@@ -13,11 +13,11 @@ echo config_file created
 
 cat << _EOF_ > $config_file
 
-DROP DATABASE test;
-
 CREATE DATABASE IF NOT EXISTS wordpress;
 
-SHOW DATABASES;
+CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+
+GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 
 FLUSH PRIVILEGES;
 
