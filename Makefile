@@ -20,4 +20,13 @@ clean:
 	@sudo rm -rf /home/elouisia/data/*
 	@docker volume rm srcs_mariadb srcs_wordpress
 
-.PHONY: run debug clean
+mariadb_logs:
+	@cd srcs && docker compose logs mariadb
+
+nginx_logs:
+	@cd srcs && docker compose logs nginx
+
+wordpress_logs:
+	@cd srcs && docker compose logs wordpress
+
+.PHONY: run debug clean mariadb_logs nginx_logs wordpress_logs
