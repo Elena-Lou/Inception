@@ -1,18 +1,21 @@
 #!/bin/bash
 
-curl -LO https://wordpress.org/latest.tar.gz
-tar xzvf latest.tar.gz
-rm -rf latest.tar.gz
-chown -R www-data:www-data /var/www/wordpress
+#curl -LO https://wordpress.org/latest.tar.gz
+#tar xzvf latest.tar.gz
+#rm -rf latest.tar.gz
 
-i=0
-while [ $i -le 7 ];
-do
-	sed -i "0,/put your unique phrase here/s//`pwgen -s 64`/" wp-config.php
-	((i++))
-done
+wp core download
+ls 
+#chown -R root:root /var/www/wordpress
 
-mv wp-config.php wordpress/
-rm wordpress/wp-config-sample.php
+#i=0
+#while [ $i -le 7 ];
+#do
+#	sed -i "0,/put your unique phrase here/s//`pwgen -s 64`/" wp-config.php
+#	((i++))
+#done
+
+#mv wp-config.php wordpress/
+#rm wordpress/wp-config-sample.php
 
 exec "$@"

@@ -2,18 +2,11 @@ FROM debian:buster
 
 RUN apt-get update && apt-get -y install \
 	curl \
-	bash \
+	php7.3 \
 	php-fpm \
 	php-mysql \
 	php-cgi \
-	php-curl \
-	php-gd \
-	php-intl \
-	php-mbstring \
-	php-soap \
-	php-xml \
-	php-xmlrpc \
-	php-zip \
+	php7.3-cli \
 	pwgen -y \
 	&& curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \
@@ -23,7 +16,7 @@ RUN mkdir /run/php
 
 COPY ./conf/wordpress-setup.sh /usr/local/bin/
 
-COPY ./conf/wp-config.php /var/www/
+#COPY ./conf/wp-config.php /var/www/
 
 COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
