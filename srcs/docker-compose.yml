@@ -67,21 +67,21 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: home/elouisia/data/mariadb
+      device: /home/elouisia/data/mariadb
   
   wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: home/elouisia/data/wordpress
+      device: /home/elouisia/data/wordpress
 
   nginx:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: home/elouisia/data/wordpress	
+      device: /home/elouisia/data/wordpress	
 
 networks:
   inception:
