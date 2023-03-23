@@ -14,6 +14,9 @@ debug:
 	@echo "\n \n --- /data/mariadb created --- \n \n"
 	@docker compose -f $(DOCKER_COMPOSE) --verbose up 
 
+stop:
+	@cd srcs && docker compose stop
+
 clean:
 	@cd srcs && docker compose down
 	@docker system prune --volumes -a -f
