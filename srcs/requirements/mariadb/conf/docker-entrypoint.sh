@@ -1,30 +1,30 @@
 #!/bin/bash
 
-#mysql_install_db
+service mysql start
 
-config_file=`mktemp`
-#if [! -f "$config_file"]; then
-#	echo " /!\ config_file not found /!\ "
-#	return 1
-#fi
+echo "Waiting for service.."
+sleep 3
 
-echo config_file created
+while [ ! -e /var/run/mysqld/mysqld.sock ]; do
+	echo nope
+	sleep 2
+done
 
+echo "service is ready"
 
-cat << _EOF_ > $config_file
+mysql -e "CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;"
 
-CREATE DATABASE IF NOT EXISTS wordpress;
+mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
 
-CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+mysql -e "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';"
 
-GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
+#mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
 
-FLUSH PRIVILEGES;
+mysql -e "FLUSH PRIVILEGES;"
 
-_EOF_
+sleep 3
 
+service mysql stop
+#mysqladmin -u root -p$MYSQL_ROOT_PASSWORD shutdown
 
-cat $config_file
-
-mysqld --user=mysql --bootstrap --verbose=0 --skip-name-resolve --skip-networking=0 < $config_file
-exec mysqld --user --console --skip-name-resolve --skip-networking=0 $@
+exec $@
