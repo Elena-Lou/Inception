@@ -17,6 +17,8 @@ debug:
 stop:
 	@cd srcs && docker compose stop
 
+down:
+	@cd srcs && docker compose down
 clean:
 	@cd srcs && docker compose down
 	@docker system prune --volumes -a -f
