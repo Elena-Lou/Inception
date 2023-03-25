@@ -7,31 +7,33 @@ up:
 	@sudo mkdir -p /home/elouisia/data/mariadb
 	@docker compose -f $(DOCKER_COMPOSE) up -d --build
 
-debug: 
-	@sudo mkdir -p /home/elouisia/data/wordpress
-	@echo "\n \n --- /data/wordpress created --- \n \n"
-	@sudo mkdir -p /home/elouisia/data/mariadb
-	@echo "\n \n --- /data/mariadb created --- \n \n"
-	@docker compose -f $(DOCKER_COMPOSE) --verbose up 
-
 stop:
-	@cd srcs && docker compose stop
+	@docker compose -f $(DOCKER_COMPOSE) stop
 
 down:
-	@cd srcs && docker compose down
+	@docker compose -f $(DOCKER_COMPOSE) down
+
 clean:
-	@cd srcs && docker compose down
+	@docker compose -f $(DOCKER_COMPOSE) down
 	@docker system prune --volumes -a -f
+	@docker volume prune -f
 	@sudo rm -rf /home/elouisia/data/*
-	@docker volume rm srcs_mariadb srcs_wordpress
+
+re: clean up
 
 mariadb_logs:
-	@cd srcs && docker compose logs mariadb
+	@docker compose -f $(DOCKER_COMPOSE) logs mariadb
 
 nginx_logs:
-	@cd srcs && docker compose logs nginx
+	@docker compose -f $(DOCKER_COMPOSE) logs nginx
 
 wordpress_logs:
-	@cd srcs && docker compose logs wordpress
+	@docker compose -f $(DOCKER_COMPOSE) logs wordpress
 
-.PHONY: run debug clean mariadb_logs nginx_logs wordpress_logs
+exec_mariadb:
+	@docker compose -f $(DOCKER_COMPOSE) exec mariadb bash
+
+exec_wordpress:
+	@docker compose -f $(DOCKER_COMPOSE) exec wordpress bash
+
+.PHONY: all up run stop down clean mariadb_logs nginx_logs wordpress_logs re exec_mariadb exec_wordpress
