@@ -2,15 +2,14 @@
 
 service mysql start
 
-echo "Waiting for service.."
-sleep 3
-
 while [ ! -e /var/run/mysqld/mysqld.sock ]; do
-	echo nope
+	echo waiting for service 
 	sleep 2
 done
 
 echo "service is ready"
+
+sleep 3
 
 mysql << _EOF_
 

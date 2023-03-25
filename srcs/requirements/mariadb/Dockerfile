@@ -2,7 +2,7 @@ FROM debian:buster
 
 EXPOSE 3306
 
-RUN apt update && apt upgrade -y && apt install execline -y \ 
+RUN apt update \ 
 	&& apt install mariadb-server -y \
 	&& mkdir -p /run/mysqld \
 	&& chown -R mysql:mysql /run/mysqld \
