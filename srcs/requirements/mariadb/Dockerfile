@@ -11,11 +11,11 @@ RUN apt update && apt upgrade -y && apt install execline -y \
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
  
-COPY conf/docker-entrypoint.sh /usr/local/bin/
+COPY conf/mariadb-setup.sh /usr/local/bin/
 
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/mariadb-setup.sh
 
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/mariadb-setup.sh"]
 
 CMD ["mysqld"]
 
