@@ -35,8 +35,8 @@ services:
     restart: on-failure
     healthcheck:
       test: [ 'CMD', 'mysqladmin', 'ping', '-u', 'root', '-p${MYSQL_ROOT_PASSWORD?REQUIRED}']
-      interval: 1m
-      timeout: 10s
+      interval: 15s
+      timeout: 5s
       retries: 5
     expose:
       - "3306"
