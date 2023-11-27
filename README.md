@@ -1,6 +1,6 @@
 # Inception
 
-Set up of a small infrastucture of three services running on three different containers using docker compose.
+Set up a small infrastucture of three services running on three different containers using docker compose.
 
 ## Subject requirements
 - A Docker container that contains NGINX with TLSv 1.2
