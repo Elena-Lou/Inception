@@ -10,6 +10,10 @@ RUN apt update \
 	&& chmod 777 /run/mysqld 
 
 COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+
+COPY ./health-check.sh /bin/health-check.sh
+
+RUN chmod +x /bin/health-check.sh
  
 COPY conf/mariadb-setup.sh /usr/local/bin/
 

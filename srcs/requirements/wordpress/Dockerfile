@@ -11,8 +11,9 @@ RUN apt-get update && apt-get -y install \
 	php-cgi \
 	php7.3-cli \
 	&& curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-	&& chmod +x wp-cli.phar \
-	&& mv wp-cli.phar /usr/local/bin/wp
+	&& chmod +x wp-cli.phar 
+
+RUN mv wp-cli.phar /usr/local/bin/
 
 RUN mkdir /run/php
 
